@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Berita;
+use App\Models\News;
 
-class BeritaController extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('berita.index') -> with([
-            'berita' => berita::all(),
-        ]);
+        $news = News::All();
+        return view('berita.index')->with('berita', $news);
     }
 
     /**
@@ -30,17 +29,14 @@ class BeritaController extends Controller
      */
     public function store(Request $request)
     {
-        $request -> validate([
-            'judul' => 'required',
-            'isi' => 'required',
-        ]);
-
-        $berita = new berita;
-        $berita->judul = $request->judul;
-        $berita->isi = $request->isi;
-        $berita->save();
-
-        return to_route('berita.index') -> with('succes', 'Berita berhasil DiTambah');
+        $requestData = $request->all();
+        if ($request->hasFile('image')) {
+            $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $path = $request->file('image')->storeAs('public/images', $fileName);
+            $requestData['image'] = 'storage/images/' . $fileName;
+        }
+        News::create($requestData);
+        return redirect('berita')->with('flash_message', 'Berita Ditambah!');
     }
 
     /**
@@ -57,7 +53,7 @@ class BeritaController extends Controller
     public function edit(string $id)
     {
         return view('berita.edit')->with([
-            'berita'=>berita::find($id),
+            'news'=>News::find($id),
         ]);
     }
 
@@ -69,12 +65,14 @@ class BeritaController extends Controller
         $request -> validate([
             'judul' => 'required',
             'isi' => 'required',
+            'image' => 'required',
         ]);
 
-        $berita = berita::find($id);
-        $berita->judul = $request->judul;
-        $berita->isi = $request->isi;
-        $berita->save();
+        $news = News::find($id);
+        $news->judul = $request->judul;
+        $news->isi = $request->isi;
+        $news->image = $request->image;
+        $news->save();
 
         return to_route('berita.index')->with('success','Data Berhasil Diubah');
     }
@@ -84,7 +82,7 @@ class BeritaController extends Controller
      */
     public function destroy(string $id)
     {
-        $berita = berita::find($id)->where('id',$id)->delete();
+        $news = News::find($id)->where('id',$id)->delete();
         return redirect('/berita');
     }
 }

@@ -3,7 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\GaleryController;
 use App\Http\Controllers\StructureController;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +23,7 @@ Route::get('/',[FrontendController::class,'index']);
 
 Route::get('/', function () {
     return view('admin.dashboard.index');
-});
+})->name('index');
 
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('berita', BeritaController::class);
+Route::resource('berita', NewsController::class);
 
 Route::resource('galery', GaleryController::class);
 

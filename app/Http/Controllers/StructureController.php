@@ -30,12 +30,15 @@ class StructureController extends Controller
     public function store(Request $request)
     {
         $requestData = $request->all();
-        $fileName = time().$request->file('photo')->getClientOriginalName();
-        $path = $request->file('photo')->storeAs('images', $fileName, 'public');
-        $requestData["photo"] = '/storage/'.$path;
-        Structure ::create($requestData);
-        return redirect('structure')->with('flash_message', 'Employee Addedd!');
+        if ($request->hasFile('photo')) {
+            $fileName = time() . '_' . $request->file('photo')->getClientOriginalName();
+            $path = $request->file('photo')->storeAs('public/images', $fileName);
+            $requestData['photo'] = 'storage/images/' . $fileName;
+        }
+        Structure::create($requestData);
+        return redirect('structure')->with('flash_message', 'Employee Added!');
     }
+
 
     /**
      * Display the specified resource.
@@ -51,7 +54,7 @@ class StructureController extends Controller
     public function edit(string $id)
     {
         return view('structure.edit')->with([
-            'structure'=>Structure::find($id),
+            'structure' => Structure::find($id),
         ]);
     }
 
@@ -60,7 +63,7 @@ class StructureController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request -> validate([
+        $request->validate([
             'name' => 'required',
             'address' => 'required',
             'mobile' => 'required',
@@ -82,6 +85,7 @@ class StructureController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $structure = Structure::find($id)->where('id', $id)->delete();
+        return redirect('/structure');
     }
 }
