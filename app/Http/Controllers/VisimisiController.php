@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Visimisi;
 use Illuminate\Http\Request;
 
 class VisimisiController extends Controller
@@ -11,7 +12,8 @@ class VisimisiController extends Controller
      */
     public function index()
     {
-        //
+        $visimisi = Visimisi::all();
+        return view('VisiMisi.index',compact('visimisi'));
     }
 
     /**
@@ -19,7 +21,7 @@ class VisimisiController extends Controller
      */
     public function create()
     {
-        //
+        return view('VisiMisi.create');
     }
 
     /**
@@ -27,7 +29,17 @@ class VisimisiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request -> validate([
+            'visi' => 'required',
+            'misi' => 'required'
+        ]);
+
+        $visimisi = new Visimisi;
+        $visimisi ->visi = $request->visi;
+        $visimisi ->misi = $request->misi;
+        $visimisi->save();
+
+        return redirect('/VisiMisi')->with('success','Data Berhasil Ditambah');
     }
 
     /**
@@ -43,7 +55,9 @@ class VisimisiController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('VisiMisi.edit')->with([
+            'visimisi' => Visimisi::find($id),
+        ]);
     }
 
     /**
@@ -51,7 +65,17 @@ class VisimisiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request -> validate([
+            'visi' => 'required',
+            'misi' => 'required'
+        ]);
+
+        $visimisi = Visimisi::find($id);
+        $visimisi-> visi = $request->visi;
+        $visimisi -> misi = $request->misi;
+        $visimisi->update();
+
+        return redirect('/VisiMisi')->with('success');
     }
 
     /**
@@ -59,6 +83,8 @@ class VisimisiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $visimisi = Visimisi::find($id)->where('id',$id)->delete();
+
+        return redirect('/VisiMisi');
     }
 }

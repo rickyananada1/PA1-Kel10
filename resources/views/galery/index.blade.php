@@ -1,53 +1,41 @@
-<!doctype html>
-<html lang="en">
+@extends('admin.master')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-</head>
+@section('title')
+Galery
+@endsection
 
-<body>
-
-    <div class="container mt-5">
-        <h1 class="text-center mb-5"> Galery </h1>
-        <a href="{{route('galery.create')}}" class="btn btn-primary mb-3">Tambah Data</a>
-        <div class="card">
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <th>NO</th>
-                        <th>Gambar</th>
-                        <th>Nama Gambar</th>
-                        <th>Aksi</th>
-                    </thead>
-                    <tbody>
-                        @foreach ($galery as $no=>$hasil)
-                            <tr>
-                                <th>{{ $no+1}}</th>
-                                <td>{{$hasil->gambar}}</td>
-                                <td>{{$hasil->nama_gambar}}</td>
-                                <td>
-                                    <form action="{{ route('galery.destroy', $hasil->id)}}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <a href="{{ route('galery.edit' , $hasil->id)}}" class="btn btn-success btn-sm">Edit</a>
-                                        <button class="btn btn-danger btn-sm">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+@section('content')
+    <div class="container">
+        <a href="{{ url('/galery/create') }}" class="btn btn-success mb-3" title="Add New Contact">
+            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+        </a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Nama Gambar</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($galery as $item)
+                    <tr>
+                        <td><img src="{{ asset('images/galery/'. $item->image) }}" alt="..." height="150px"></td>
+                        <td>{{ $item->name }}</td>
+                        <td>
+                            <form action="{{ route('galery.destroy', $item->id) }}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <a href="{{ route('galery.edit', $item->id) }}" class="btn btn-success">Edit</a>
+                                <button class="btn btn-danger">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <a href="{{ route('index') }}" class="btn btn-success mb-3" title="Back">
+            <i class="fa fa-plus" aria-hidden="true"></i> Kembali
+        </a>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
+@endsection

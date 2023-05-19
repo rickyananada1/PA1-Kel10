@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use Illuminate\Http\Request;
 use App\Models\Structure;
 
@@ -29,14 +30,18 @@ class StructureController extends Controller
      */
     public function store(Request $request)
     {
-        $requestData = $request->all();
-        if ($request->hasFile('photo')) {
-            $fileName = time() . '_' . $request->file('photo')->getClientOriginalName();
-            $path = $request->file('photo')->storeAs('public/images', $fileName);
-            $requestData['photo'] = 'storage/images/' . $fileName;
-        }
-        Structure::create($requestData);
-        return redirect('structure')->with('flash_message', 'Employee Added!');
+        $file = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images/structure'),$file);
+
+        $structure = new Structure;
+
+        $structure->name = $request->name;
+        $structure->address = $request->address;
+        $structure->mobile = $request->mobile;
+        $structure->image = $file;
+
+        $structure->save();
+        return redirect('structure')->with('flash_message', 'Data Sudah Ditambah!');
     }
 
 
@@ -67,15 +72,24 @@ class StructureController extends Controller
             'name' => 'required',
             'address' => 'required',
             'mobile' => 'required',
-            'photo' => 'required',
         ]);
 
         $structure = Structure::find($id);
-        $structure->name = $request->name;
-        $structure->address = $request->address;
-        $structure->mobile = $request->mobile;
-        $structure->photo = $request->photo;
-        $structure->save();
+        if ($request->has('image')) {
+            $path = 'images/structure/';
+            File::delete($path . $structure->image);
+            $file = time() . '.' . $request->image->extension();
+
+            $request->image->move(public_path('images/structure'), $file);
+
+            $structure->image = $file;
+            $structure->save();
+        }
+
+        $structure->name = $request['name'];
+        $structure->address = $request['address'];
+        $structure->mobile = $request['mobile'];
+        $structure->update();
 
         return to_route('structure.index')->with('succes', 'Data berhasil diubah');
     }
@@ -85,7 +99,10 @@ class StructureController extends Controller
      */
     public function destroy(string $id)
     {
-        $structure = Structure::find($id)->where('id', $id)->delete();
+        $structure = Structure::find($id);
+        $path = 'images/structure/';
+        File::delete($path. $structure->image);
+        $structure->delete();
         return redirect('/structure');
     }
 }

@@ -1,7 +1,7 @@
 @extends('admin.master')
 
 @section('title')
-    Selamat Datang Admin
+    Selamat Datang {{Auth::user()->name}}
 @endsection
 
 @section('subtitle')
@@ -77,7 +77,7 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>65</h3>
+                            <h3>{{$total_galery}}</h3>
                             <p>Galery</p>
                         </div>
                         <div class="icon">
@@ -102,13 +102,13 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
-                            <p>Visi Misi</p>
+                            <h3>{{$total_pengumuman}}</h3>
+                            <p>Pengumuman</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{Route('pengumuman.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->

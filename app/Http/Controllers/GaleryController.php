@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use App\Models\Galery;
 use Illuminate\Http\Request;
 
@@ -12,10 +13,9 @@ class GaleryController extends Controller
      */
     public function index()
     {
-        $galery = Galery::latest()->get();
-        return view('galery.index', compact('galery'));
+        $galery = Galery::All();
+        return view('galery.index')->with('galery',$galery);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -30,28 +30,22 @@ class GaleryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'gambar' => 'required|image|mimes:jpeg,png,jpg',
-            'nama_gambar' => 'required',
-        ]);
-
-        $gambar = $request->file('gambar');
-        $namafile = $gambar->getClientOriginalName();
-        $tujuan = 'build/asset/gambar';
-        $gambar->move($tujuan, $namafile);
+        $file = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images/galery'),$file);
 
         $galery = new Galery;
-        $galery->gambar = $namafile;
-        $galery->nama_gambar = $request->nama_gambar;
-        $galery->save();
 
-        return redirect()->route('galery.index')->with('success', 'Gambar berhasil ditambahkan');
+        $galery->name = $request->name;
+        $galery->image = $file;
+
+        $galery->save();
+        return redirect('galery')->with('flash_message', 'Berita Ditambah!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($galeryId)
+    public function show(string $id)
     {
         //
     }
@@ -59,37 +53,49 @@ class GaleryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($galeryId)
+    public function edit(string $id)
     {
-        $galery = Galery::where('id', $galeryId)->first();
-        return view('editGalery', ['galery' => $galery]);
+        return view("galery.edit")->with([
+            'galery'=>Galery::find($id),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $galeryId)
+    public function update(Request $request, string $id)
     {
-        $request->validate([
-            'gambar' => 'required|image|mimes:jpeg,png,jpg',
-            'nama_gambar' => 'required',
+        $request -> validate([
+            'name' => 'required'
         ]);
 
-        Galery::where('id', $galeryId)
-            ->update([
-                'gambar' => $request->gambar,
-                'nama_gambar' => $request->nama_gambar,
-            ]);
+        $galery = Galery::find($id);
+        if ($request->has('image')) {
+            $path = 'images/galery/';
+            File::delete($path . $galery->image);
+            $file = time() . '.' . $request->image->extension();
 
-        return redirect("/")->with('status', 'Gambar dengan id' . $galeryId . ' berhasil di ubah');
+            $request->image->move(public_path('images/galery'), $file);
+
+            $galery->image = $file;
+            $galery->save();
+        }
+
+        $galery->name = $request['name'];
+        $galery->update();
+
+        return to_route('galery.index')->with('succes','Galery Sudah Ditambahkan');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($galeryId)
+    public function destroy(string $id)
     {
-        Galery::where('id', $galeryId)->delete();
-        return redirect("/")->with('status', 'Gambar dengan id : ' . $galeryId . "berhasil dihapus");
+        $galery = Galery::find($id);
+        $path = 'images/galery/';
+        File::delete($path. $galery->image);
+        $galery->delete();
+        return redirect('/galery');
     }
 }

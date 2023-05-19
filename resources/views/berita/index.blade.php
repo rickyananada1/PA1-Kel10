@@ -1,4 +1,9 @@
-@extends('structure.layout')
+@extends('admin.master')
+
+@section('title')
+    Berita
+@endsection
+
 @section('content')
     <div class="container">
         <a href="{{ url('/berita/create') }}" class="btn btn-success mb-3" title="Add New Contact">
@@ -14,21 +19,25 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($berita as $item)
+                @forelse ($news as $key => $item)
                     <tr>
-                        <td><img src="{{ asset($item->image) }}" alt="..." height="150px"></td>
+                        <td><img src="{{ asset('images/berita/' . $item->image) }}" alt="..." height="150px"></td>
                         <td>{{ $item->judul }}</td>
                         <td>{{ $item->isi }}</td>
                         <td>
                             <form action="{{ route('berita.destroy', $item->id) }}" method="POST">
                                 @csrf
                                 @method('delete')
-                                <a href="{{ route('berita.edit', $item->id) }}" class="btn btn-success">Edit</a>
+                                <a href="/berita/{{ $item->id }}/edit" class="btn btn-success">Edit</a>
                                 <button class="btn btn-danger">Hapus</button>
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td>Data Tidak Ada</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
         <a href="{{ route('index') }}" class="btn btn-success mb-3" title="Back">

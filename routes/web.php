@@ -6,6 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\GaleryController;
 use App\Http\Controllers\StructureController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\VisimisiController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -39,4 +41,14 @@ Route::resource('galery', GaleryController::class);
 
 Route::resource('/structure', StructureController::class);
 
+Route::resource('VisiMisi', VisimisiController::class);
+
+Route::resource('pengumuman', PengumumanController::class);
+
 require __DIR__.'/auth.php';
+
+Route::get('/admin/dashboard', function(){
+    return view('admin.dashboard');
+})->middleware(['auth:admin'])->name('admin.dashboard');
+
+require __DIR__.'/adminauth.php';

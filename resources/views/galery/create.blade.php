@@ -1,40 +1,30 @@
-<!doctype html>
-<html lang="en">
+@extends('admin.master')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-</head>
+@section('title')
+    Gallery
+@endsection
 
-<body>
-
-    <div class="container mt-5">
-        <h1 class="text-center mb-5"> Gambar </h1>
-        <a href="{{ route('galery.index') }}" class="btn btn-primary btn-sm mb-3"><i class="bi bi-arrow-left"></i>Data Gambar</a>
-        <div class="card">
-            <div class="card-body">
-                <form action="{{route('galery.store')}}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="gambar" class="form-label">Gambar</label>
-                        <input type="file" name="gambar" id="gambar">
-                    </div>
-                    <div class="mb-3">
-                        <label for="nama_gambar" class="form-label">Nama Gambar</label>
-                        <input type="text" class="form-control" name="nama_gambar" id="nama_gambar">
-                    </div>
-                    <button type="submit" class="btn btn-primary float-end">Simpan</button>
-                </form>
-            </div>
+@section('content')
+    <div class="card">
+        <div class="card-body">
+            <form action="/galery" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="name">Nama Gambar</label>
+                    <textarea class="form-control @error('name') is-invalid @enderror" name="name" id="name" rows="3">{{ old('name') }}</textarea>
+                    @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="image">Gambar</label>
+                    <input class="form-control-file @error('image') is-invalid @enderror" name="image" type="file" id="image">
+                    @error('image')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <button type="submit" class="btn btn-success">Save</button>
+            </form>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
+@endsection

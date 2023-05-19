@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use Illuminate\Http\Request;
 use App\Models\News;
 
@@ -13,7 +14,7 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::All();
-        return view('berita.index')->with('berita', $news);
+        return view('berita.index',compact('news'))->with('berita', $news);
     }
 
     /**
@@ -29,13 +30,28 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $requestData = $request->all();
-        if ($request->hasFile('image')) {
-            $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $path = $request->file('image')->storeAs('public/images', $fileName);
-            $requestData['image'] = 'storage/images/' . $fileName;
-        }
-        News::create($requestData);
+        $alert = [
+            'judul' => 'required|string|max:255',
+            'isi' => 'required',
+            'image' => 'required|image|mimes:jpg,png,jpeg',
+        ];
+        $message = [
+            'judul.required' => 'Kolom Judul Harus Di Isi',
+            'isi.required' => 'Isi Berita Harus Di Isi',
+            'image.required' => 'Image Harus Di Isi',
+            'image.mimes' => 'Harus Berupa JPG,PNG,JPEG',
+        ];
+        $this->validate($request, $alert, $message);
+        $file = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images/berita'),$file);
+
+        $news = new News;
+
+        $news->judul = $request->judul;
+        $news->image = $file;
+        $news->isi = $request->isi;
+
+        $news->save();
         return redirect('berita')->with('flash_message', 'Berita Ditambah!');
     }
 
@@ -52,9 +68,8 @@ class NewsController extends Controller
      */
     public function edit(string $id)
     {
-        return view('berita.edit')->with([
-            'news'=>News::find($id),
-        ]);
+        $news = News::find($id);
+        return view('berita.edit',compact('news'));
     }
 
     /**
@@ -62,19 +77,28 @@ class NewsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request -> validate([
+        $request->validate([
             'judul' => 'required',
             'isi' => 'required',
-            'image' => 'required',
         ]);
-
         $news = News::find($id);
-        $news->judul = $request->judul;
-        $news->isi = $request->isi;
-        $news->image = $request->image;
-        $news->save();
+        if ($request->has('image')) {
+            $path = 'images/berita/';
+            File::delete($path . $news->image);
+            $file = time() . '.' . $request->image->extension();
 
-        return to_route('berita.index')->with('success','Data Berhasil Diubah');
+            $request->image->move(public_path('images/berita'), $file);
+
+            $news->image = $file;
+            $news->save();
+        }
+
+        $news->judul = $request['judul'];
+        $news->isi = $request['isi'];
+        $news->update();
+
+        return redirect()->route('berita.index')->with('success','Data Berhasil Diubah');
+
     }
 
     /**
@@ -82,7 +106,10 @@ class NewsController extends Controller
      */
     public function destroy(string $id)
     {
-        $news = News::find($id)->where('id',$id)->delete();
+        $news = News::find($id);
+        $path = 'images/berita';
+        File::delete($path. $news->image);
+        $news->delete();
         return redirect('/berita');
     }
 }

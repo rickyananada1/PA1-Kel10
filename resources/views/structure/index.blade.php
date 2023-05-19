@@ -1,4 +1,4 @@
-@extends('structure.layout')
+@extends('admin.master')
 @section('content')
     <div class="container">
         <a href="{{ url('/structure/create') }}" class="btn btn-success mb-3" title="Add New Contact">
@@ -6,13 +6,13 @@
         </a>
         <div class="row">
             @foreach($structures as $item)
-            <div class="col-md-4 mb-4">
+            <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img src="{{ asset($item->photo) }}" class="card-img-top" alt="..." height="250px">
+                    <img src="{{ asset('images/structure/'.$item->image) }}" class="card-img-top" alt="..." height="150px">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $item->name }}</h5>
-                        <p class="card-text">{{ $item->address }}</p>
-                        <p class="card-text">{{ $item->mobile }}</p>
+                        <h1 class="card-title">Nama : {{ $item->name }}</h1> <br>
+                        <p class="card-text">Alamat :{{ $item->address }}</p>
+                        <p class="card-text">No Telepon:{{ $item->mobile }}</p>
                         <form action="{{ route('structure.destroy', $item->id) }}" method="POST">
                             @csrf
                             @method('delete')
@@ -25,7 +25,7 @@
             @endforeach
         </div>
         <a href="{{ route('index') }}" class="btn btn-success mb-3" title="Back">
-            <i class="fa fa-plus" aria-hidden="true"></i> Kembali
+            <i aria-hidden="true"></i> Kembali
         </a>
     </div>
 @endsection

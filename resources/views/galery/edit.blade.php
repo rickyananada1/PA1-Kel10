@@ -1,63 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('admin.master')
 
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Upload Gambar</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+@section('title')
+    Gallery
+@endsection
 
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-        }
-
-        main {
-            margin: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        input[type=file] {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        input[type=submit] {
-            background-color: #333;
-            border: none;
-            color: #fff;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        input[type=submit]:hover {
-            background-color: #555;
-        }
-    </style>
-</head>
-
-<body>
-    <header>
-        <h1>Admin Upload Gambar</h1>
-    </header>
-    <main>
-        <form action="{{route('galery.store')}}" method="post" enctype="multipart/form-data">
-            @csrf
-            <label for="gambar">Pilih Gambar:</label>
-            <input type="file" id="gambar" name="gambar" accept="image/*">
-            <input type="submit" value="Unggah">
-        </form>
-    </main>
-</body>
-
-</html>
+@section('content')
+    <div class="card">
+        <div class="card-body">
+            <form action="/galery/{{$galery->id }}" method="post" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <label>Nama Gambar</label><br>
+                <textarea name="name" id="name" class="form-control">{{ $galery->name }}</textarea><br>
+                @error('name')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                <label>Gambar</label><br>
+                <input type="file" id="image" name="image" class="form-control"><br>
+                <a href="{{ asset('images/galery/' . $galery->image) }}" class="btn btn-info btn-sm" target="_blank">Lihat Gambar</a>
+                <br>
+                <button type="submit" class="btn btn-success my-3" >Save</button>
+            </form>
+        </div>
+    </div>
+@endsection
