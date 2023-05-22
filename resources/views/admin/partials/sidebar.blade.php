@@ -1,7 +1,5 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-
-
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user (optional) -->
@@ -11,8 +9,8 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{Auth::user()->name}}</a>
-              </div>
+                <a href="#" class="d-block">{{ Auth::guard('admin')->user()->name }}</a>
+            </div>
         </div>
 
         <!-- SidebarSearch Form -->
@@ -36,7 +34,7 @@
                with font-awesome or any other icon font library -->
 
                 <li class="nav-item">
-                    <a href="{{Route('dashboard')}}" class="nav-link">
+                    <a href="{{ Route('dashboard') }}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -55,31 +53,6 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Table
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="/table" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Table</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/data-table" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Data Tabel</p>
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-newspaper"></i>
                         <p>
                             Berita
@@ -88,13 +61,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{Route('berita.index')}}" class="nav-link">
+                            <a href="{{route('index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Data Berita</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{Route('berita.create')}}" class="nav-link">
+                            <a href="/berita/create" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Add Berita</p>
                             </a>
@@ -131,13 +104,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{Route('galery.index')}}" class="nav-link">
+                            <a href="{{ Route('galery.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Daftar Galeri</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{Route('galery.create')}}" class="nav-link">
+                            <a href="{{ Route('galery.create') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Add Galeri</p>
                             </a>
@@ -156,7 +129,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{Route('structure.index')}}" class="nav-link">
+                            <a href="{{ Route('structure.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Data Pemerintahan</p>
                             </a>
@@ -174,7 +147,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{Route('VisiMisi.index')}}" class="nav-link">
+                            <a href="{{ Route('VisiMisi.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>VisiMisi</p>
                             </a>
@@ -207,17 +180,11 @@
                     </ul>
                 </li>
 
-
-                <li class="nav-item">
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="nav-link">
-                            <i class="nav-icon fas fa-sign-out-alt"></i>
-                            <p>
-                                Logout
-                            </p>
-                        </button>
-                    </form>
+                <li class="nav-item bg-white">
+                    <a href="{{url('admin/logout')}}" class="nav-link">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
                 </li>
             </ul>
         </nav>

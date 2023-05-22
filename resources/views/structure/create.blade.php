@@ -6,7 +6,6 @@ Struktur Pemerintahan
 
 @section('content')
 <div class="card">
-  <div class="card-header">Contactus Page</div>
   <div class="card-body">
 
       <form action="/structure" method="post" enctype="multipart/form-data">

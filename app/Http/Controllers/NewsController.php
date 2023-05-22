@@ -14,7 +14,7 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::All();
-        return view('berita.index',compact('news'))->with('berita', $news);
+        return view('berita.index',compact('news'));
     }
 
     /**
@@ -52,7 +52,7 @@ class NewsController extends Controller
         $news->isi = $request->isi;
 
         $news->save();
-        return redirect('berita')->with('flash_message', 'Berita Ditambah!');
+        return redirect('/berita')->with('flash_message', 'Berita Ditambah!');
     }
 
     /**
@@ -97,7 +97,7 @@ class NewsController extends Controller
         $news->isi = $request['isi'];
         $news->update();
 
-        return redirect()->route('berita.index')->with('success','Data Berhasil Diubah');
+        return redirect('/berita')->with('success','Data Berhasil Diubah');
 
     }
 
