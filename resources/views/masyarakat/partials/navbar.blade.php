@@ -21,18 +21,16 @@
         id="navbarCollapse"
       >
         <div class="navbar-nav font-weight-bold mx-auto py-0">
-          <a href="index.html" class="nav-item nav-link active">Home</a>
+          <a href="" class="nav-item nav-link">Home</a>
           <div class="nav-item dropdown">
             <a
               href="#"
               class="nav-link dropdown-toggle"
-              data-toggle="dropdown"
-              >Profil Desa</a
-            >
+              data-toggle="dropdown">Tentang Desa</a>
             <div class="dropdown-menu rounded-0 m-0">
-              <a href="team.html" class="dropdown-item">Perangkat Desa</a>
-              <a href="team.html" class="dropdown-item">Visi Misi</a>
-              <a href="single.html" class="dropdown-item">Tentang Desa</a>
+              <a href="{{route('structure')}}" class="dropdown-item">Perangkat Desa</a>
+              <a href="{{route('visimisi')}}" class="dropdown-item">Visi Misi</a>
+              <a href="single.html" class="dropdown-item">Profil Desa</a>
             </div>
           </div>
           <div class="nav-item dropdown">
@@ -47,9 +45,9 @@
               </div>
           </div>
           <a href="team.html" class="nav-item nav-link">Saran</a>
-          <a href="gallery.html" class="nav-item nav-link">Gallery</a>
+          <a href="{{route('galery')}}" class="nav-item nav-link">Gallery</a>
           <a href="contact.html" class="nav-item nav-link">Contact</a>
-          <a href="index.html" class="nav-item nav-link active">Pengumuman</a>
+          <a href="{{route('pengumuman')}}" class="nav-item nav-link">Pengumuman</a>
         </div>
         </div>
     </nav>

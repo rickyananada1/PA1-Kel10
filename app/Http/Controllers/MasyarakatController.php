@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Masyarakat;
+use App\Models\Galery;
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
+use Nette\Schema\Elements\Structure;
 
 class MasyarakatController extends Controller
 {
@@ -78,4 +80,12 @@ class MasyarakatController extends Controller
         Auth::guard('masyarakat')->logout();
         return redirect('masyarakat/login');
     }
+
+    public function galery()
+    {
+        $galery = Galery::get();
+
+        return view('masyarakat.galery', compact('galery'));
+    }
+    
 }

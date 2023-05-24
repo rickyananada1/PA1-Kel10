@@ -4,12 +4,25 @@
     Berita
 @endsection
 
+@push('css')
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+@endpush
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.js"></script>
+@endpush
+
 @section('content')
     <div class="container">
         <a href="{{ url('/berita/create') }}" class="btn btn-success mb-3" title="Add New Contact">
             <i class="fa fa-plus" aria-hidden="true"></i> Add New
         </a>
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="myTable">
             <thead>
                 <tr>
                     <th style="width: 25%;">Image</th>
@@ -21,9 +34,9 @@
             <tbody>
                 @forelse ($news as $key => $item)
                     <tr>
-                        <td><img src="{{ asset('images/berita/' . $item->image) }}" alt="..." height="150px"></td>
+                        <td><img src="{{ asset('images/berita/' . $item->image) }}" alt="..." height="50px" width="50px"></td>
                         <td>{{ $item->judul }}</td>
-                        <td>{{ $item->isi }}</td>
+                        <td>{!! Illuminate\Support\Str::limit(strip_tags($item->isi), 30) !!}</td>
                         <td>
                             <form action="{{ route('berita.destroy', $item->id) }}" method="POST">
                                 @csrf
@@ -34,9 +47,9 @@
                         </td>
                     </tr>
                 @empty
-                <tr>
-                    <td>Data Tidak Ada</td>
-                </tr>
+                    <tr>
+                        <td>Data Tidak Ada</td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>

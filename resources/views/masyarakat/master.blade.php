@@ -30,63 +30,12 @@
 </head>
 
 <body>
-    <!-- Navbar Start -->
     @include('masyarakat.partials.navbar')
-    <!-- Navbar End -->
+    <h1>@yield('title')</h1>
 
-    <!-- Header Start -->
-    <div class="container-fluid bg-primary px-0 px-md-5 mb-5">
-        <div class="row align-items-center px-3">
-            <div class="col-lg-6 text-center text-lg-left">
-                <h2 class="display-4 font-weight-bold text-white">
-                    Apa Itu Sistem Informasi Desa??
-                </h2>
-                <p class="text-white mb-4">
-                    Sea ipsum kasd eirmod kasd magna, est sea et diam ipsum est amet sed
-                    sit. Ipsum dolor no justo dolor et, lorem ut dolor erat dolore sed
-                    ipsum at ipsum nonumy amet. Clita lorem dolore sed stet et est justo
-                    dolore.
-                </p>
-            </div>
-            <div class="col-lg-6 text-center text-lg-right">
-                <img src="{{ '/frontend/img/pengertian-desa.jpg' }}" alt="" class="img-fluid m-3">
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid pt-5">
-        <div class="container">
-            <div class="text-center pb-2">
-                <p class="section-title px-5">
-                    <span class="px-2">Berita</span>
-                </p>
-                <h1 class="mb-4">Berita Terbaru</h1>
-            </div>
-            <div class="row pb-3">
+    @yield('content')
 
-                @foreach ($news as $item)
-                    <div class="col-lg-4 mb-4">
-                        <div class="card border-0 shadow-sm mb-2">
-                            <img class="card-img-top mb-2" src="{{ asset('images/berita/' . $item->image) }}"
-                                alt="" />
-
-                            <div class="card-body bg-light text-center p-4">
-                                <h4 class="">{{ $item->judul }}</h4>
-                                <p>{!! Str::limit($item->isi, 50) !!}</p>
-                                <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer Start -->
     @include('masyarakat.partials.footer')
-    <!-- Footer End -->
-
-    <!-- Back to Top -->
     <a href="#" class="btn btn-primary p-3 back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
     <!-- JavaScript Libraries -->
@@ -103,6 +52,7 @@
 
     <!-- Template Javascript -->
     <script src="{{asset('/frontend/js/main.js')}}"></script>
+
 </body>
 
 </html>

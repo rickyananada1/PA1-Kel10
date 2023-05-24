@@ -1,4 +1,9 @@
 @extends('admin.master')
+
+@section('title')
+    Aparatur Desa
+@endsection
+
 @section('content')
     <div class="container">
         <a href="{{ url('/structure/create') }}" class="btn btn-success mb-3" title="Add New Contact">
@@ -8,11 +13,13 @@
             @foreach($structures as $item)
             <div class="col-md-3 mb-4">
                 <div class="card">
+                    <h6>{{$item->jabatan}}</h6>
+                    <br>
                     <img src="{{ asset('images/structure/'.$item->image) }}" class="card-img-top" alt="..." height="150px">
                     <div class="card-body">
-                        <h1 class="card-title">Nama : {{ $item->name }}</h1> <br>
-                        <p class="card-text">Alamat :{{ $item->address }}</p>
-                        <p class="card-text">No Telepon:{{ $item->mobile }}</p>
+                        <p class="card-title">Nama      : {{ $item->name }}</h1> <br>
+                        <p class="card-text"> Alamat    :{{ $item->address }}</p>
+                        <p class="card-text"> No Telepon:{{ $item->mobile }}</p>
                         <form action="{{ route('structure.destroy', $item->id) }}" method="POST">
                             @csrf
                             @method('delete')

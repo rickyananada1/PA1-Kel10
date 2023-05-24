@@ -14,7 +14,7 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::All();
-        return view('berita.index',compact('news'));
+        return view('berita.index', compact('news'));
     }
 
     /**
@@ -43,7 +43,7 @@ class NewsController extends Controller
         ];
         $this->validate($request, $alert, $message);
         $file = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('images/berita'),$file);
+        $request->image->move(public_path('images/berita'), $file);
 
         $news = new News;
 
@@ -60,7 +60,9 @@ class NewsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $berita = News::findOrFail($id);
+
+        return view('masyarakat.berita.show', compact('berita'));
     }
 
     /**
@@ -69,7 +71,7 @@ class NewsController extends Controller
     public function edit(string $id)
     {
         $news = News::find($id);
-        return view('berita.edit',compact('news'));
+        return view('berita.edit', compact('news'));
     }
 
     /**
@@ -97,7 +99,7 @@ class NewsController extends Controller
         $news->isi = $request['isi'];
         $news->update();
 
-        return redirect('/berita')->with('success','Data Berhasil Diubah');
+        return redirect('/berita')->with('success', 'Data Berhasil Diubah');
 
     }
 
@@ -108,7 +110,7 @@ class NewsController extends Controller
     {
         $news = News::find($id);
         $path = 'images/berita';
-        File::delete($path. $news->image);
+        File::delete($path . $news->image);
         $news->delete();
         return redirect('/berita');
     }

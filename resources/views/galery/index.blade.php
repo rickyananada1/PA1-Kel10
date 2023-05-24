@@ -4,12 +4,25 @@
 Galery
 @endsection
 
+@push('css')
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+@endpush
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.js"></script>
+@endpush
+
 @section('content')
     <div class="container">
         <a href="{{ url('/galery/create') }}" class="btn btn-success mb-3" title="Add New Contact">
             <i class="fa fa-plus" aria-hidden="true"></i> Add New
         </a>
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="myTable">
             <thead>
                 <tr>
                     <th>Image</th>

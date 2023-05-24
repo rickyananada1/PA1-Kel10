@@ -5,7 +5,6 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">Contactus Page</div>
         <div class="card-body">
             <form action="/berita/{{ $news->id }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -16,7 +15,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
                 <label>Isi</label><br>
-                <input type="text" name="isi" id="isi" value="{{ $news->isi }}" class="form-control"><br>
+                <textarea name="isi" id="summernote" class="form-control" cols="30" rows="10"> {{ $news->isi ?? ''}}</textarea>
                 @error('isi')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -28,4 +27,17 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+
+<script>
+  $(document).ready(function() {
+    $('#summernote').summernote({
+      placeholder: 'Masukkan Deskripsi',
+      tabsize: 2,
+      height: 200
+    });
+  });
+</script>
 @endsection

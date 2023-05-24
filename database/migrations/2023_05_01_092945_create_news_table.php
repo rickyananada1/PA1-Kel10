@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
-            $table->text('isi');
+            $table->longText('isi');
             $table->string('image',300);
             $table->timestamps();
         });

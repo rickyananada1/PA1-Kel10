@@ -13,6 +13,17 @@
     <link rel="stylesheet" href="{{ asset('/Template/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('/Template/dist/css/adminlte.min.css') }}">
+    <style>
+        h6 {
+            font-family: "Arial", sans-serif;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+    @stack('css')
+
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -87,6 +98,11 @@
     <script src="{{ asset('/Template/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('/Template/dist/js/adminlte.min.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+
+    @stack('js')
 </body>
 
 </html>

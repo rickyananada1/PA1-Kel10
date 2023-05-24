@@ -21,7 +21,7 @@
                 @forelse ($visimisi as $key => $item)
                     <tr>
                         <td>{{ $item->visi }}</td>
-                        <td>{{ $item->misi }}</td>
+                        <td>{!! Illuminate\Support\Str::limit(strip_tags($item->misi), 30) !!}</td>
                         <td>
                             <form action="VisiMisi/{{$item->id}}" method="POST">
                                 @csrf

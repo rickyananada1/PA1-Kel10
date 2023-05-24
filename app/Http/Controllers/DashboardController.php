@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Galery;
+use App\Models\Masyarakat;
 use App\Models\News;
 use App\Models\Pengumuman;
 use App\Models\Structure;
@@ -23,12 +24,15 @@ class DashboardController extends Controller
 
         $total_pengumuman = Pengumuman::count();
 
+        $total_masyarakat = Masyarakat::count();
+
         return view('admin.dashboard.index', compact(
             'nama_admin',
             'total_berita',
             'total_structure',
             'total_galery',
-            'total_pengumuman'
+            'total_pengumuman',
+            'total_masyarakat'
         ));
     }
 }

@@ -1,7 +1,7 @@
 @extends('admin.master')
 
 @section('title')
-    {{-- Selamat Datang {{Auth::user()->name}} --}}
+    Selamat Datang {{ Auth::guard('admin')->user()->name }}
 @endsection
 
 @section('subtitle')
@@ -38,7 +38,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>45</h3>
                             <p>User Registrations</p>
                         </div>
                         <div class="icon">

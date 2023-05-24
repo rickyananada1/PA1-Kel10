@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\FronController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\GaleryController;
@@ -25,16 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 // Route::get('/', [FrontendController::class, 'index']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
-// Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
+Route::get('/', [FronController::class, 'dashboard'])->name('home');
 
 Route::resource('berita', NewsController::class);
 
@@ -78,6 +69,9 @@ Route::prefix('admin')->namespace('App\Http\Controllers')->group(function () {
 
         // Route resource for 'pengumuman'
         Route::resource('pengumuman', 'PengumumanController');
+
+        Route::resource('masyarakat', 'MasyarakatController');
+
     });
 });
 
@@ -85,12 +79,17 @@ Route::prefix('admin')->namespace('App\Http\Controllers')->group(function () {
 Route::prefix('masyarakat')->namespace('App\Http\Controllers')->group(function () {
     // route login
     Route::match(['get', 'post'], 'login', 'MasyarakatController@login');
+
     Route::match(['get', 'post'], 'register', 'MasyarakatController@register');
+
     Route::get('logout', 'MasyarakatController@logout');
 
-    // Route::middleware(['Masyarakat'])->group(function () {
-    //     Route::get('dashboard', 'MasyarakatController@dashboard')->name('dashboard');
-        // Route logout
+    Route::get('/galery', [FronController::class, 'galeri'])->name('galery');
 
-//     });
+    Route::get('/structure', [FronController::class, 'structure'])->name('structure');
+
+    Route::get('/visimisi', [FronController::class, 'visimisi'])->name('visimisi');
+
+    Route::get('/pengumuman', [FronController::class, 'pengumuman'])->name('pengumuman');
+
 });

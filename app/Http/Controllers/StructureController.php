@@ -36,6 +36,7 @@ class StructureController extends Controller
         $structure = new Structure;
 
         $structure->name = $request->name;
+        $structure->jabatan = $request->jabatan;
         $structure->address = $request->address;
         $structure->mobile = $request->mobile;
         $structure->image = $file;
@@ -70,6 +71,7 @@ class StructureController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'jabatan' => 'required',
             'address' => 'required',
             'mobile' => 'required',
         ]);
@@ -87,6 +89,7 @@ class StructureController extends Controller
         }
 
         $structure->name = $request['name'];
+        $structure->jabatan = $request['jabatan'];
         $structure->address = $request['address'];
         $structure->mobile = $request['mobile'];
         $structure->update();

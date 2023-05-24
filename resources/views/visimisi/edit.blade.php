@@ -15,7 +15,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
                 <label>Misi</label><br>
-                <input type="text" name="misi" id="misi" value="{{ $visimisi->misi }}" class="form-control"><br>
+                <textarea name="misi" id="summernote" class="form-control" cols="30" rows="10"> {{ $visimisi->misi ?? ''}}</textarea>
                 @error('misi')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -24,4 +24,17 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+
+<script>
+  $(document).ready(function() {
+    $('#summernote').summernote({
+      placeholder: 'Masukkan Deskripsi',
+      tabsize: 2,
+      height: 200
+    });
+  });
+</script>
 @endsection

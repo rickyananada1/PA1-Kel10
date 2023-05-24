@@ -16,8 +16,7 @@ Pengumuman
     <div class="alert alert-danger">{{$message}}</div>
     @enderror
     <label>Isi</label></br>
-    {{-- <textarea name="isi" id="isi" width="10" cols="30" class="form-control"></textarea></br> --}}
-    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+    <textarea name="description" id="summernote" class="form-control" cols="30" rows="10"></textarea>
     @error('isi')
     <div class="alert alert-danger">{{$message}}</div>
     @enderror
@@ -25,4 +24,17 @@ Pengumuman
 </form>
 </div>
 </div>
+@endsection
+
+@section('scripts')
+
+<script>
+  $(document).ready(function() {
+    $('#summernote').summernote({
+      placeholder: 'Masukkan Deskripsi',
+      tabsize: 2,
+      height: 200
+    });
+  });
+</script>
 @endsection

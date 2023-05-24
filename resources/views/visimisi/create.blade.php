@@ -13,9 +13,23 @@ Form Visi Misi
     <label>Visi</label></br>
     <input type="text" name="visi" id="visi" class="form-control"></br>
     <label>Misi</label></br>
-    <textarea name="misi" id="misi" class="form-control" cols="30" rows="10"></textarea>
+    <textarea name="misi" id="summernote" class="form-control" cols="30" rows="10"></textarea>
    <input type="submit" value="Save" class="btn btn-success"></br>
 </form>
 </div>
 </div>
 @endsection
+
+@section('scripts')
+
+<script>
+  $(document).ready(function() {
+    $('#summernote').summernote({
+      placeholder: 'Masukkan Deskripsi',
+      tabsize: 2,
+      height: 200
+    });
+  });
+</script>
+@endsection
+

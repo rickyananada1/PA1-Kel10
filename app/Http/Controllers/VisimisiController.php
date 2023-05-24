@@ -65,17 +65,18 @@ class VisimisiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request -> validate([
+        $request->validate([
             'visi' => 'required',
             'misi' => 'required'
         ]);
 
         $visimisi = Visimisi::find($id);
-        $visimisi-> visi = $request->visi;
-        $visimisi -> misi = $request->misi;
+        $visimisi->visi = $request->visi;
+        $visimisi->misi = $request->misi;
         $visimisi->update();
 
         return redirect('/VisiMisi')->with('success');
+
     }
 
     /**
