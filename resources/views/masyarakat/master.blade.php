@@ -17,6 +17,8 @@
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <!-- Flaticon Font -->
     <link href="{{ asset('/frontend/lib/flaticon/font/flaticon.css') }}" rel="stylesheet" />
@@ -27,6 +29,9 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('/frontend/css/style.css') }}" rel="stylesheet" />
+
+    @stack('style')
+
 </head>
 
 <body>
@@ -53,6 +58,9 @@
     <!-- Template Javascript -->
     <script src="{{asset('/frontend/js/main.js')}}"></script>
 
+    @stack('script')
+
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

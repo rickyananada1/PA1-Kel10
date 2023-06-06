@@ -147,7 +147,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ Route('VisiMisi.index') }}" class="nav-link">
+                            <a href="visimisi" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>VisiMisi</p>
                             </a>

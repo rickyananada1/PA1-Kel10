@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-md-6">
                     <h3>Misi</h3>
-                    <ul>{{$item->misi}}</ul>
+                    <ul>{!!$item->misi!!}</ul>
                 </div>
             </div>
         </div>

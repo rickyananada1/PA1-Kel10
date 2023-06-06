@@ -65,13 +65,16 @@
         <div class="container">
             <div class="row">
                 @foreach ($pengumuman as $item)
-                    <div class="col-md-6">
+                    <div class="col-md-12">
+                        <!-- Modify the column class to occupy the entire row -->
                         <div class="card">
-                            <h1>{{$item->title}}</h1>
-                            <p>{{$item->description}}</p>
+                            <h4 style="font-family: 'Times New Roman', Times, serif">{{ $item->title }}</h4>
+                            <p style="font-size: 12px; color: #555;">{{ $item->created_at }}</p>
+                            <p>{{ $item->description }}</p>
                         </div>
                     </div>
                 @endforeach
+
             </div>
         </div>
 

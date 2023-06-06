@@ -6,7 +6,7 @@
 @section('content')
     <div class="container-fluid bg-primary mb-5">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-            <h3 class="display-3 font-weight-bold text-white">Perangkat Desa</h3>
+            <h3 class="display-3 font-weight-bold text-white">Struktur Pemerintahan Desa</h3>
 
         </div>
     </div>

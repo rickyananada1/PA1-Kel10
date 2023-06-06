@@ -25,17 +25,20 @@ use Illuminate\Support\Facades\Route;
 */
 // Route::get('/', [FrontendController::class, 'index']);
 
-Route::get('/', [FronController::class, 'dashboard'])->name('home');
+Route::middleware(['guest'])->group(function(){
+    Route::get('/', [FronController::class, 'dashboard'])->name('home');
 
-Route::resource('berita', NewsController::class);
+    Route::resource('berita', NewsController::class);
 
-Route::resource('galery', GaleryController::class);
+    Route::resource('galery', GaleryController::class);
 
-Route::resource('structure', StructureController::class);
+    Route::resource('structure', StructureController::class);
 
-Route::resource('VisiMisi', VisimisiController::class);
+    Route::resource('VisiMisi', VisimisiController::class);
 
-Route::resource('pengumuman', PengumumanController::class);
+    Route::resource('pengumuman', PengumumanController::class);
+});
+
 
 require __DIR__ . '/auth.php';
 
@@ -72,6 +75,10 @@ Route::prefix('admin')->namespace('App\Http\Controllers')->group(function () {
 
         Route::resource('masyarakat', 'MasyarakatController');
 
+        Route::get('saran',[DashboardController::class,'saran'])->name('admin.saran');
+
+        Route::get('surat',[DashboardController::class,'surat'])->name('admin.surat');
+
     });
 });
 
@@ -82,7 +89,10 @@ Route::prefix('masyarakat')->namespace('App\Http\Controllers')->group(function (
 
     Route::match(['get', 'post'], 'register', 'MasyarakatController@register');
 
-    Route::get('logout', 'MasyarakatController@logout');
+    Route::middleware(['Masyarakat'])->group(function () {
+        Route::get('logout', 'MasyarakatController@logout');
+
+    Route::get('/dashboard', [FronController::class, 'dashboard']);
 
     Route::get('/galery', [FronController::class, 'galeri'])->name('galery');
 
@@ -91,5 +101,25 @@ Route::prefix('masyarakat')->namespace('App\Http\Controllers')->group(function (
     Route::get('/visimisi', [FronController::class, 'visimisi'])->name('visimisi');
 
     Route::get('/pengumuman', [FronController::class, 'pengumuman'])->name('pengumuman');
+
+    Route::get('saran', [FronController::class, 'saran'])->name('saran');
+
+    Route::post('saran',[FronController::class, 'saranStore'])->name('saranStore');
+
+    Route::get('surat', [FronController::class, 'surat'])->name('surat');
+
+    Route::post('surat',[FronController::class, 'suratStore'])->name('suratStore');
+
+    Route::get('/semuaBerita', [FronController::class, 'semuaBerita'])->name('semuaBerita');
+
+    Route::get('/berita/{id}', [FronController::class, 'beritadetail'])->name('beritadetail');
+
+    Route::get('/contact', [FronController::class, 'contact'])->name('contact');
+
+    Route::get('/profilDesa', [FronController::class, 'profilDesa'])->name('profilDesa');
+
+    });
+
+
 
 });

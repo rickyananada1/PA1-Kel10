@@ -43,4 +43,13 @@ class Masyarakat extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function saran()
+    {
+        return $this->hasMany(Saran::class);
+    }
+    public function surat()
+    {
+        return $this->hasMany(Surat::class);
+    }
 }
